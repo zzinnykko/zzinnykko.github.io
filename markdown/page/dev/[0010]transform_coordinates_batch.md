@@ -6,12 +6,10 @@ updated: "2026-01-23"
 
 [localdata]에 활용할만한 좋은 자료는 많은데 좌표가 중부원점좌표임, 이를 대량으로 위/경도 변환할 필요가 있어 AI 도움을 받아 python 코드를 작성함.
 
-- 의존성
 ```bash
 pip install pandas
 ```
 
-- 코드
 ```python
 from pyproj import Transformer
 import pandas as pd
