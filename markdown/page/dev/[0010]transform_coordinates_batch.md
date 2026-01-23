@@ -46,6 +46,6 @@ for idx, row in source.iterrows():
     data = pd.DataFrame([[row["ID"], lon, lat]])
     data.to_csv(output, mode="a", header=False, index=False, encoding="utf-8")
     print(f"{idx+1}/{total} 완료")
-```
 
     # if idx >= 10: break
+```
