@@ -4,7 +4,7 @@ title: "localdata의 중부원점좌표(EPSG:5174)를 위/경도로 대량 변�
 updated: "2026-01-23"
 ---
 
-[localdata]에 활용할만한 좋은 자료는 많은데 좌표가 중부원점좌표임, 이를 대량으로 위/경도 변환할 필요가 있어 AI 도움을 받아 python 코드를 작성함.
+[localdata](https://www.localdata.go.kr/)에 활용할만한 좋은 자료는 많은데 좌표가 중부원점좌표임, 이를 대량으로 위/경도 변환할 필요가 있어 AI 도움을 받아 python 코드를 작성함.
 
 ```bash
 pip install pandas
