@@ -1,0 +1,18 @@
+---
+---
+
+<header class="flex w-full justify-between items-center px-1 py-4">
+    <div>
+        <h1 id="site-title">zzinnykko's blog</h1>
+    </div>
+    <div>
+        <button btn-to-top class="outline-none border-none cursor-pointer">↑</button>
+    </div>
+</header>
+
+<script>
+    document.querySelector("[btn-to-top")?.addEventListener("click", () => {
+        window.dispatchEvent(new CustomEvent("clicked-btn-to-top"));
+    });
+    
+</script>
