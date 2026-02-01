@@ -1,13 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Header from "../layouts/Header.astro";
+import Main from "../layouts/Main.astro";
+import Footer from "../layouts/Footer.astro";
 ---
 
 <Layout>
-	<div id="container" class="fixed top-0 right-0 bottom-0 left-0">
-		<div class="wrapper">Header</div>
+	<div id="container" class="fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll">
+		<div class="wrapper sticky top-0"><Header /></div>
 		<div class="wrapper">Nav</div>
-		<div class="wrapper">Main</div>
-		<div class="wrapper">Footer</div>
+		<div class="wrapper"><Main /></div>
+		<div class="wrapper sticky top-[100vh]"><Footer /></div>
 	</div>
 </Layout>
 
@@ -18,3 +21,12 @@ import Layout from "../layouts/Layout.astro";
 		@apply w-full max-w-240 my-0 mx-auto p-0;
 	}
 </style>
+
+<script>
+	const $container = document.getElementById("container");
+	window.addEventListener("click-to-top", () => {
+		$container?.scrollTo({
+			top: 0, behavior: "smooth"
+		});
+	});
+</script>
