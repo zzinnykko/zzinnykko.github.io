@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+	<div id="container" class="fixed top-0 right-0 bottom-0 left-0">
+		<div class="wrapper">Header</div>
+		<div class="wrapper">Nav</div>
+		<div class="wrapper">Main</div>
+		<div class="wrapper">Footer</div>
+	</div>
+</Layout>
+
+<style>
+	@reference "../styles/global.css";
+
+	.wrapper {
+		@apply w-full max-w-240 my-0 mx-auto p-0;
+	}
+</style>
