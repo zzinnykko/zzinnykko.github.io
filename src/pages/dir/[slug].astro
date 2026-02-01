@@ -1,0 +1,40 @@
+---
+import type { GetStaticPaths } from "astro";
+
+type MarkdownInstance = {
+    file: string,
+    frontmatter: Record<string, any>,
+    Content: any,
+    [key: string]: any,
+};
+
+export const getStaticPaths: GetStaticPaths = async() => {
+    const dirs = import.meta.glob("../../../_dirs/**/*.md", { eager: true }) as Record<string, MarkdownInstance>;
+
+    return Object.values(dirs).map((post) => {
+        const filePath = post?.file ?? "";
+        const slug = filePath.split("/").pop()?.replace(/\.md$/, "").replace(/\[.*?\]/g, "").trim().replace(/\s+/g, "_") ?? "untitled";
+        return {
+            params: { slug },
+            props: { post, slug },
+        };
+    });
+}
+
+const { post, slug } = Astro.props;
+const { frontmatter } = post as MarkdownInstance;
+
+const pages = import.meta.glob(`../../../_pages/${ slug }/**/*.md`, { eager: true }) as Record<string, MarkdownInstance>;
+const pagesinfo = Object.values(pages).map((post) => {
+    const filePath = post?.file ?? "";
+    const fileSlug = filePath.split("/").pop()?.replace(/\.md$/, "").replace(/\[.*?\]/g, "").trim().replace(/\s+/g, "_") ?? "untitled";
+    
+    return { href: `/page/${ fileSlug }`, title: post?.frontmatter?.title, updated: post?.frontmatter?.updated };
+});
+---
+
+<article class="dir">
+    <h1>{ frontmatter.title } 카테고리</h1>
+    <div class="text-right">Last updated: { frontmatter.updated }</div>
+    
+</article>
