@@ -1,6 +1,7 @@
 ---
 import Layout from "$/src/layouts/Layout.astro";
 import Header from "$/src/layouts/Header.astro";
+import Nav from "$/src/layouts/Nav.astro";
 import Main from "$/src/layouts/Main.astro";
 import Footer from "$/src/layouts/Footer.astro";
 ---
@@ -8,7 +9,7 @@ import Footer from "$/src/layouts/Footer.astro";
 <Layout>
 	<div id="container" class="fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll">
 		<div class="wrapper sticky top-0"><Header /></div>
-		<div class="wrapper">Nav</div>
+		<div class="wrapper"><Nav /></div>
 		<div class="wrapper"><Main /></div>
 		<div class="wrapper sticky top-[100vh]"><Footer /></div>
 	</div>

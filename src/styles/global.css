@@ -52,3 +52,16 @@
     border-spacing: 0;
   }
 }
+
+
+* {
+  @apply leading-normal;
+}
+
+a, a:hover, a:visited, a:active, a:link {
+  @apply border-b border-dotted text-blue-600 cursor-pointer;
+}
+
+button {
+  @apply outline-0 border-b border-dotted text-blue-600 cursor-pointer;
+}

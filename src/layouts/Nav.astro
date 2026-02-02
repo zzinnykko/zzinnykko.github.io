@@ -1,7 +1,24 @@
 ---
-const dirsglob = import.meta.glob("$/_dir/**.md");
+const dirsGlobResult = Object.entries(import.meta.glob("$/_dir/**.md")).sort((x, y) => x[0].localeCompare(y[0]));
+
+
+const list = [];
+for (const [_, resolver] of dirsGlobResult) {
+    const { frontmatter, file } = await resolver() as { frontmatter: { title: string, [key: string]: any }, file: string, [key: string]: any };
+    const href = "/dir/" + file.split("/").pop()?.replace(/\.md$/, "").replace(/\[.*?\]/g, "").replace(/\s+/g, " ").trim();
+    const title = frontmatter.title;
+
+    list.push({ href, title });
+}
+
+
 ---
 
-<div>
-    
-</div>
+<nav class="py-4 px-1">
+    <ul class="flex justify-left items-center gap-x-4">
+        <li>카테고리:</li>
+        { list.map((x) => (
+            <li><a href={ x.href }>{ x.title }</a></li>
+        )) }
+    </ul>
+</nav>
