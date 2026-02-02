@@ -1,43 +1,34 @@
 ---
+import { dirpages } from "$/src/lib/getmd.ts";
 import type { GetStaticPaths } from "astro";
 
+
 export const getStaticPaths = (async () => {
-    const dirsGlobResult = Object.entries(import.meta.glob("$/_dir/**.md"));
-
-    const list = [];
-    for (const [_, resolver] of dirsGlobResult) {
-        const { frontmatter, file } = await resolver() as { frontmatter: { title: string, [key: string]: any }, file: string, [key: string]: any };
-        const slug = file.split("/").pop()?.replace(/\.md$/, "").replace(/\[.*?\]/g, "").replace(/\s+/g, " ").trim();
-        const title = frontmatter.title;
-        const updated = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' });
-        const sort = frontmatter.sort ?? "asc";
-
-        list.push({ slug, title, sort, updated });
-    }
+    const result: { params: { slug: string }, props: { [key: string]: any }}[] = [];
     
-    const result = [];
-    for (const { slug, title, sort, updated } of list) {
-        const postGlobResult =  Object.entries(import.meta.glob(`$/_page/${slug}/*.md`)).sort((x, y) => x[0].localeCompare(y[0]));
-        if (sort === "desc") postGlobResult.reverse();
+    for (const [dir, pages] of Object.entries(dirpages)) {
+        if (dir === "/" || dir === "_dir") continue;
 
-        const postlist = [];
-        for (const [_, resolver] of postGlobResult) {
-            const { frontmatter, file } = await resolver() as { frontmatter: { title: string, [key: string]: any }, file: string, [key: string]: any };
-            const posthref = "/page/" + file.split("/").pop()?.replace(/\.md$/, "").replace(/\[.*?\]/g, "").replace(/\s+/g, " ").trim();
-            const posttitle = frontmatter.title;
-            const postupdated = frontmatter.updated ?? "";
+        const list = [];
+        for (const { href, resolver } of pages) {
+            const { frontmatter, updated } = await resolver() as { frontmatter: { title: string, updated: string, [key: string]: any }, [key: string]: any };
 
-            postlist.push({ href: posthref, title: posttitle, updated: postupdated });
+            list.push({ href, title: frontmatter.title, updated: frontmatter.updated });
         }
-        
-        result.push({ params: { slug }, props: { posts: postlist, title, updated }});
+
+        const dirinfo = (await dirpages["_dir"].find((x) => x.dir === dir)?.resolver()) as { frontmatter: { title: string, updated: string, sort: string, [key: string]: any }, [key: string]: any };
+        if (dirinfo?.sort === "desc") list.reverse();
+
+        result.push({ params: { slug: dir }, props: { posts: list, title: dirinfo.frontmatter.title } });
     }
+
 
     return result;
-
 }) satisfies GetStaticPaths;
 
-const { posts, title, updated } = Astro.props;
+const { posts, title } = Astro.props;
+const updated = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' });
+
 ---
 
 <article class="dir">

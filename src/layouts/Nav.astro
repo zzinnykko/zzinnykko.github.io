@@ -1,14 +1,11 @@
 ---
-const dirsGlobResult = Object.entries(import.meta.glob("$/_dir/**.md")).sort((x, y) => x[0].localeCompare(y[0]));
-
+import { dirpages } from "$/src/lib/getmd.ts";
 
 const list = [];
-for (const [_, resolver] of dirsGlobResult) {
-    const { frontmatter, file } = await resolver() as { frontmatter: { title: string, [key: string]: any }, file: string, [key: string]: any };
-    const href = "/dir/" + file.split("/").pop()?.replace(/\.md$/, "").replace(/\[.*?\]/g, "").replace(/\s+/g, " ").trim();
-    const title = frontmatter.title;
+for (const { href, dir, resolver } of dirpages["_dir"]) {
+    const { frontmatter } = await resolver() as { frontmatter: { title: string, [key: string]: any }, [key: string]: any };
 
-    list.push({ href, title });
+    list.push({ href, title: frontmatter.title });
 }
 
 
