@@ -1,0 +1,39 @@
+---
+
+---
+
+
+<main class="py-4 px-1">
+    <div id="article-here">
+
+    </div>
+</main>
+
+<script>
+    const $articleHere = document.getElementById("article-here");
+
+    window.addEventListener("fetch-content", async (e) => {
+        const event = e as CustomEvent;
+        const tar = event.detail.tar === "/.json" ? "/_page/index.json" : event.detail.tar;
+
+        console.log(tar);
+        console.log(event.detail.tar);
+
+        const articleHere = await (async function() {
+            try {
+                const res = await fetch(tar, { cache: "no-store" });
+                return await res.json();
+            } catch (err) {
+                try {
+                    const res = await fetch("https://raw.githubusercontent.com/zzinnykko/zzinnykko.github.io/gh-pages/_page/404.json");
+                    return await res.json();
+                } catch (innererr) {
+                    console.log("your requested file is not valid or not found");
+                    return { content: "#N/A" };
+                }               
+            }    
+        })();
+
+        if ($articleHere) $articleHere.innerHTML = articleHere?.content;
+    });
+</script>

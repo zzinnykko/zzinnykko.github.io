@@ -1,0 +1,17 @@
+---
+---
+
+<header class="py-4 px-1 flex justify-between items-center">
+    <div>
+        <h1 id="site-title">zzinnykko's blog</h1>
+    </div>
+    <div>
+        <button id="to-top">to top</button>
+    </div>
+</header>
+
+<script>
+    document.getElementById("#to-top")?.addEventListener("click", () => {
+        window.dispatchEvent(new CustomEvent("click-to-top"));
+    });
+</script>

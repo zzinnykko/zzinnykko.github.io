@@ -1,0 +1,70 @@
+---
+import Layout from "$/src/layouts/Layout.astro";
+import Header from "$/src/layouts/Header.astro";
+import Nav from "$/src/layouts/Nav.astro";
+import Main from "$/src/layouts/Main.astro";
+import Footer from "$/src/layouts/Footer.astro";
+---
+
+<Layout >
+    <div id="container" class="fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll">
+        <div class="wrapper sticky top-0"><Header /></div>
+        <div class="wrapper"><Nav /></div>
+        <div class="wrapper"><Main /></div>
+        <div class="wrapper sticky top-[100vh]"><Footer /></div>
+    </div>
+</Layout>
+
+<style>
+    @reference "$/src/styles/global.css";
+
+    .wrapper {
+        @apply w-full max-w-240 my-0 mx-auto p-0;
+    }
+</style>
+
+<script>
+    const $container = document.getElementById("container");
+    window.addEventListener("click-to-top", () => {
+        $container?.scrollTo({
+            top: 0, behavior: "smooth"
+        });
+    });
+</script>
+
+<script>
+    async function fetchContent() {
+        const t = window.location.pathname.split("/");
+        const tar = `https://raw.githubusercontent.com/zzinnykko/zzinnykko.github.io/gh-pages${t.at(-2)}.json`;
+        
+        console.log("index->", window.location.pathname, t, t.at(-2));
+
+        window.dispatchEvent(new CustomEvent("fetch-content", { detail: tar }));
+    };
+
+    // 주소를 직접 입력했을 때
+    await fetchContent();
+
+    // 브라우저 전/후 버튼 클릭했을 때
+    window.onpopstate = async () => {
+        await fetchContent();
+    };
+
+    // 브라우저 a 태그 클릭했을 때
+    document.body.addEventListener("click", async (e) => {
+        const el = e?.target as HTMLElement;
+        
+        // 클릭한 것이 "a" 태그 아니거나, 동일한 origin이 아니거나, 주소에 확장자나 #이 붙은 경우에는 그냥 리턴
+        if (!(el instanceof HTMLAnchorElement)) return;
+        if (!el.href.startsWith(window.location.origin)) return;
+        if (el.href.match(/[.#]/)) return;
+
+        e.preventDefault();
+
+        // 현재와 동일한 주소가 아닐때만 작동
+        if (el.href !== window.location.href) {
+            history.pushState(null, "", el.href);
+            await fetchContent();
+        } 
+    });
+</script>
