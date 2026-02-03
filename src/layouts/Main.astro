@@ -14,10 +14,7 @@
 
     window.addEventListener("fetch-content", async (e) => {
         const event = e as CustomEvent;
-        const tar = event.detail.tar === "/.json" ? "/_page/index.json" : event.detail.tar;
-
-        console.log(tar);
-        console.log(event.detail.tar);
+        const tar = event.detail.tar;
 
         const articleHere = await (async function() {
             try {

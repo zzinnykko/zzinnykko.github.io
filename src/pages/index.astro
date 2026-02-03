@@ -34,10 +34,9 @@ import Footer from "$/src/layouts/Footer.astro";
 
 <script>
     async function fetchContent() {
-        const t = window.location.pathname.split("/");
-        const tar = `https://raw.githubusercontent.com/zzinnykko/zzinnykko.github.io/gh-pages${t.at(-2)}.json`;
-        
-        console.log("index->", window.location.pathname, t, t.at(-2));
+        let t = window.location.pathname;
+        if (t === "/") t = "/_page/index";
+        const tar = `https://raw.githubusercontent.com/zzinnykko/zzinnykko.github.io/gh-pages${window.location.pathname}.json`;
 
         window.dispatchEvent(new CustomEvent("fetch-content", { detail: tar }));
     };

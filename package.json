@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "zzinnykko.github.io",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -11,7 +11,14 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@types/fs-extra": "^11.0.4",
+    "@types/markdown-it": "^14.1.2",
     "astro": "^5.17.1",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.3",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
     "tailwindcss": "^4.1.18"
   }
 }
