@@ -1,1 +1,1 @@
-# zzinnykko.github.io
+# zzinnykko's blog
