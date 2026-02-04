@@ -1,0 +1,22 @@
+---
+export const partial = true;
+
+import { dirpages } from "$/src/lib/dirpages.ts"; 
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (() => {
+    const result = [];
+
+    for (const [dir, pages] of Object.entries(dirpages)) {
+        for (const page of pages) {
+            const x = import.meta.glob(page.path, { eager: true });
+        }
+    }
+
+
+    return [{ params: { slug: "test" }, props: { title: "테스트입니다" }}];
+}) satisfies GetStaticPaths;
+
+const { title } = Astro.props;
+---
+

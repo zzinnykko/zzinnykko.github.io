@@ -4,6 +4,8 @@ import Header from "$/src/layouts/Header.astro";
 import Nav from "$/src/layouts/Nav.astro";
 import Main from "$/src/layouts/Main.astro";
 import Footer from "$/src/layouts/Footer.astro";
+
+import { dirpages } from "$/src/lib/dirpages.ts";
 ---
 
 <Layout >
@@ -12,6 +14,7 @@ import Footer from "$/src/layouts/Footer.astro";
         <div class="wrapper"><Nav /></div>
         <div class="wrapper"><Main /></div>
         <div class="wrapper sticky top-[100vh]"><Footer /></div>
+        { dirpages.toString() }
     </div>
 </Layout>
 

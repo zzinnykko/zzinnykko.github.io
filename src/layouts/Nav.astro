@@ -1,23 +1,14 @@
 ---
+import { dirpages } from "$/src/lib/dirpages";
 
+const dirs = dirpages["_dir"];
 ---
 
 
 <nav class="py-4 px-1">
-    <ul id="nav-here"></ul>
+    <ul>
+        {
+            (dirs) ? dirs.map((x) => (<li><a href={ x.url }>{ x.title }</a></li>)) : `dirpages["_dir"] is undefined`
+        }
+    </ul>
 </nav>
-
-<script>
-    const $navHere = document.getElementById("nav-here");
-    const navHere = await (async function() {
-        try {
-            const res = await fetch("https://raw.githubusercontent.com/zzinnykko/zzinnykko.github.io/gh-pages/_dir/_nav.json", { cache: "no-store" });
-            return await res.json();
-        } catch (err) {
-            console.log("_nav.json file is not valid or not found");
-            return { content: "#N/A" };
-        }    
-    })();
-
-   if ($navHere) $navHere.innerHTML = navHere?.content;
-</script>
