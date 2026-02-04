@@ -1,0 +1,49 @@
+---
+export const partial = true;
+
+import type { GetStaticPaths } from "astro";
+import { allglob } from "$/src/lib/dirpages.ts";
+
+export const getStaticPaths = (async () => {
+    const result = [];
+
+    const dirs = [];
+    for (const { path, loader } of allglob["_dir"]) {
+        const { frontmatter } = await loader();
+        
+        dirs.push([frontmatter.slug, frontmatter.title]);
+    }
+
+    for (const [slug, title] of dirs) {
+        const pages = [];
+
+        for (const { path, loader } of allglob[slug]) {
+            const { frontmatter } = await loader();
+
+            pages.push({ ...frontmatter });
+        }
+
+        result.push({
+            params: { slug },
+            props: { title, pages },
+        });
+    }
+    
+    return result;
+}) satisfies GetStaticPaths;
+
+const updated = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' });
+const { title, pages } = Astro.props;
+---
+
+<article class="dir">
+    <h1 id="page-title">{ title } 카테고리</h1>
+    <div class="text-right">Last updated: { updated }</div>
+    <ul>
+        {
+            pages.map((x) => (
+                <li><a href={ x.url }>{ x.title }</a> <span>Last updated: { x.updated }</span></li>
+            ))
+        }
+    </ul>
+</article>

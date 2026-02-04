@@ -3,9 +3,10 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"],
   "compilerOptions": {
-    // "lib": [
-    //   "DOM"
-    // ],
+    "lib": [
+      "ESNext"
+    ],
+    "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
       "$/*": ["*"]

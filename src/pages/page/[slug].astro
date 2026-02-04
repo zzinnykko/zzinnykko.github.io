@@ -1,22 +1,33 @@
 ---
 export const partial = true;
 
-import { dirpages } from "$/src/lib/dirpages.ts"; 
 import type { GetStaticPaths } from "astro";
+import { allglob } from "$/src/lib/dirpages.ts";
 
-export const getStaticPaths = (() => {
+export const getStaticPaths = (async () => {
     const result = [];
 
-    for (const [dir, pages] of Object.entries(dirpages)) {
-        for (const page of pages) {
-            const x = import.meta.glob(page.path, { eager: true });
+    for (const [ dir, pages ] of Object.entries(allglob)) {
+        if (dir === "_dir") continue;
+
+        for (const { path, loader } of pages) {
+            const { frontmatter, Content } = await loader();
+
+            result.push({
+                params: { slug: frontmatter.title },
+                props: { ...frontmatter, Content },
+            });
         }
     }
-
-
-    return [{ params: { slug: "test" }, props: { title: "테스트입니다" }}];
+    
+    return result;
 }) satisfies GetStaticPaths;
 
-const { title } = Astro.props;
+const { title, updated, Content } = Astro.props;
 ---
 
+<article class="page">
+    <h1 id="page-title">{ title }</h1>
+    <div class="text-right">Last updated: { updated }</div>
+    <Content />
+</article>

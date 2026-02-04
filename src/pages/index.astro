@@ -5,7 +5,7 @@ import Nav from "$/src/layouts/Nav.astro";
 import Main from "$/src/layouts/Main.astro";
 import Footer from "$/src/layouts/Footer.astro";
 
-import { dirpages } from "$/src/lib/dirpages.ts";
+import { allglob } from "$/src/lib/dirpages.ts";
 ---
 
 <Layout >
@@ -14,7 +14,6 @@ import { dirpages } from "$/src/lib/dirpages.ts";
         <div class="wrapper"><Nav /></div>
         <div class="wrapper"><Main /></div>
         <div class="wrapper sticky top-[100vh]"><Footer /></div>
-        { dirpages.toString() }
     </div>
 </Layout>
 
@@ -38,10 +37,10 @@ import { dirpages } from "$/src/lib/dirpages.ts";
 <script>
     async function fetchContent() {
         let t = window.location.pathname;
-        if (t === "/") t = "/_page/index";
-        const tar = `https://raw.githubusercontent.com/zzinnykko/zzinnykko.github.io/gh-pages${window.location.pathname}.json`;
+        if (t === "/") t = "/page/index";
+        const tar = `${t}.html`;
 
-        window.dispatchEvent(new CustomEvent("fetch-content", { detail: tar }));
+        window.dispatchEvent(new CustomEvent("fetch-content", { detail: { tar } }));
     };
 
     // 주소를 직접 입력했을 때

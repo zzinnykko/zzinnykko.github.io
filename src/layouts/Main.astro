@@ -16,21 +16,24 @@
         const event = e as CustomEvent;
         const tar = event.detail.tar;
 
+        console.log(await fetch(tar));
+
         const articleHere = await (async function() {
             try {
                 const res = await fetch(tar, { cache: "no-store" });
-                return await res.json();
+                if (res.status !== 200) throw new Error();
+                return await res.text();
             } catch (err) {
                 try {
-                    const res = await fetch("https://raw.githubusercontent.com/zzinnykko/zzinnykko.github.io/gh-pages/_page/404.json");
-                    return await res.json();
+                    const res = await fetch("/page/404.html");
+                    if (res.status !== 200) throw new Error();
+                    return await res.text();
                 } catch (innererr) {
-                    console.log("your requested file is not valid or not found");
-                    return { content: "#N/A" };
+                    return "your requested file is not valid or not found";
                 }               
             }    
         })();
 
-        if ($articleHere) $articleHere.innerHTML = articleHere?.content;
+        if ($articleHere) $articleHere.innerHTML = articleHere;
     });
 </script>

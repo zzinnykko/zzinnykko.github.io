@@ -1,14 +1,23 @@
 ---
-import { dirpages } from "$/src/lib/dirpages";
+import { allglob } from "$/src/lib/dirpages";
 
-const dirs = dirpages["_dir"];
+const dirs = [];
+
+if (allglob["_dir"]) {
+    for (const { path, url, loader } of allglob["_dir"]) {
+        const { frontmatter } = await loader();
+
+        dirs.push({ url, title: frontmatter.title ?? "#n/a" });
+    }
+}
+
 ---
 
 
 <nav class="py-4 px-1">
     <ul>
         {
-            (dirs) ? dirs.map((x) => (<li><a href={ x.url }>{ x.title }</a></li>)) : `dirpages["_dir"] is undefined`
+            (dirs.length > 0) ? dirs.map((x) => (<li><a href={ x.url }>{ x.title }</a></li>)) : `allglob["_dir"].length === 0`
         }
     </ul>
 </nav>
