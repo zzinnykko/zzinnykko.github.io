@@ -21,13 +21,13 @@ const md = markdownit({
 });
 
 const root = process.cwd();
-await fs.remove(`${ root }/page`);
-await fs.remove(`${ root }/dir`);
+await fs.remove(`${ root }/_site`);
 
 const allglob = [
     ...(await Array.fromAsync(glob(`${ root }/_page/**/*.md`))).sort(),
     ...(await Array.fromAsync(glob(`${ root }/_dir/**.md`))).sort(),
 ];
+
 
 /**
  * allglob 파싱, 저장
@@ -35,11 +35,12 @@ const allglob = [
 const dirpages: Record<string, { title: string, url: string, updated: string }[]> = {};
 
 for (const src of allglob) {
-    const slug = path.parse(src).name.replace(/\[.*?\]/g, "").trim().replace(/\s+/g, "_");
-    const dir = src.split("/").at(-2) ?? "#n/a";
+    const p = path.parse(src);
+    const slug = p.name.replace(/\[.*?\]/g, "").trim().replace(/\s+/g, "_");
+    const dir = p.dir.split(path.sep).at(-1);
     const prefix = (dir === "_dir") ? "/dir/" : "/page/";
     const url = (prefix === "/page/" && slug === "index") ? "/" : prefix + slug;
-    const tar = root + prefix + slug + ".json";
+    const tar = root + "/_site" + prefix + slug + ".json";
 
     const { data, content } = matter(await fs.readFile(src, { encoding: "utf-8" }));
     const parsed = md.render(content);
