@@ -42,12 +42,14 @@ for (const src of allglob) {
     const url = (prefix === "/page/" && slug === "index") ? "/" : prefix + slug;
     const tar = root + "/_site" + prefix + slug + ".json";
 
+    // console.log(src, "==>", dir);
+
     const { data, content } = matter(await fs.readFile(src, { encoding: "utf-8" }));
     const parsed = md.render(content);
     const vars = {
         ...data,
         content: parsed,
-        pages: dirpages[dir] ?? [{ title: "#n/a", url: "#n/a", updated: "#n/a" }],
+        pages: (dir === "_dir") ? dirpages[slug] ?? [{ title: "#n/a", url: "#n/a", updated: "#n/a" }] : [],     // _dir 폴더의 경우만 정상작동
     } as { [key: string]: any };
 
     while ("layout" in vars) {
@@ -58,8 +60,33 @@ for (const src of allglob) {
         Object.assign(vars, { content: parsed });
     }
 
+    
     dirpages[dir] ??= [];
     dirpages[dir].push({ title: vars.title ?? "#n/a", url, updated: vars.url ?? "#n/a" });
 
+
     fs.outputJSON(tar, { src, tar, url, content: vars.content });
+}
+
+
+/**
+ * index.html, 404.html, sitemap.xml 작성
+ */
+{
+    console.log(dirpages);
+
+    let src = `${ root }/_layout/layout.pug`
+    let parsed = pug.render(
+        await fs.readFile(src, { encoding: "utf-8" }),
+        { pages: dirpages["_dir"], filename: src },
+    );
+    await fs.outputFile(`${ root }/_site/index.html`, parsed, { encoding: "utf-8" });
+    await fs.copyFile(`${ root }/_site/index.html`, `${ root }/_site/404.html`);
+
+    src = `${ root }/_layout/sitemap.pug`;
+    parsed = pug.render(
+        await fs.readFile(src, { encoding: "utf-8" }),
+        { dirpages: dirpages },
+    ); 
+    await fs.outputFile(`${ root }/_site/sitemap.xml`, parsed, { encoding: "utf-8" });
 }

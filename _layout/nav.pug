@@ -1,9 +1,7 @@
----
----
-
 nav(class="py-4 px-1")
     ul(class="flex justify-left items-center gap-x-4")
         li 카테고리:
+        
         each x in pages
             li
                 a(href=`${ x.url }`) #{ x.title }
