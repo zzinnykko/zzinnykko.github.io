@@ -1,7 +1,8 @@
 {
   "recommendations": [
-    "astro-build.astro-vscode",
-    "bradlc.vscode-tailwindcss"
+    "github.vscode-github-actions",
+    "antfu.unocss",
+    "ritwickdey.liveserver"
   ],
   "unwantedRecommendations": []
 }
