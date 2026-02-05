@@ -1,0 +1,60 @@
+---
+---
+
+!doctype html 
+html(lang="ko")
+    head 
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0, viewport-fit=cover")
+        title zzinnykko's blog
+        style.
+            * { @apply leading-normal box-border; }
+            a, a:link, a:visited, a:hover, a:focus { @apply border-b border-dotted text-blue-600; }
+            b, string { @apply border-b border-dotted text-red-600 font-normal; }
+
+    body(class="fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll")
+        div(class="max-w-240 mx-auto")
+            include ./header.pug
+        div(class="max-w-240 mx-auto")
+            include ./nav.pug
+        div(class="max-w-240 mx-auto")
+            include ./main.pug
+        div(class="max-w-240 mx-auto")
+            include ./footer.pug
+
+        script(type="module").
+            window.addEventListener("click-to-top", () => {
+                document.body.scrollTo({
+                    top: 0, behavior: "smooth"
+                });
+            });
+
+            async function fetchContent() {
+                const reqpath = window.location.pathname;
+                const tar = (reqpath === "/" ? "/page/index" : reqpath) + ".json";
+
+                window.dispatchEvent(new CustomEvent("fetch-content", { detail: { tar } }));
+            }
+
+            // 주소 직접 입력
+            await fetchContent()
+
+            // <a>태그 클릭
+            document.body.addEventListener("click", async () => {
+                const el = e.target;
+
+                // 클릭 태그가 <a> 아니거나, href 도메인이 블로그가 아니거나, 해시태그나 파일(. 으로 판별)이거나, href 가 현재의 주소와 동일하면 리턴
+                if (!el.matches("a")) return;
+                if (!el.href.startsWith(window.location.origin)) return;
+                if (el.href.match(/[.#]/)) return;
+                if (el.href === window.location.href) return;
+
+                e.preventDefault();
+                history.pushState(null, "", el.href);
+                await fetchContent();
+            });
+
+            // 전/후 이동버튼 클릭
+            window.onpopstate = async () => {
+                await fetchContent();
+            };

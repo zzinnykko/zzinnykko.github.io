@@ -1,0 +1,23 @@
+---
+---
+
+main(id="main" class="py-4 px-1")
+
+script(type="module").
+    $main = document.getElementById("main");
+
+    window.addEventListener("fetch-content", async (e) => {
+        const tar = e.detail.tar;
+
+        let res = await fetch(tar, { cache: "no-store" });
+        if (res.status !== 200) {
+            res = await fetch("/page/404.json", { cache: "no-store" });
+        }
+        if (res.status !== 200) {
+            res = undefined;
+        }
+
+        const result = await res.json().catch(() => { content: "no vaild json" });
+
+        $main.innerHTML = result.content;
+    });
