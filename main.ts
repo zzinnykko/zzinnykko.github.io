@@ -51,6 +51,7 @@ for (const src of allglob) {
         content: parsed,
         pages: (dir === "_dir") ? dirpages[slug] ?? [{ title: "#n/a", url: "#n/a", updated: "#n/a" }] : [],     // _dir 폴더의 경우만 정상작동
     } as { [key: string]: any };
+    if (vars.updated === "") vars.updated = new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
 
     while ("layout" in vars) {
         const { data, content } = matter(await fs.readFile(`${ root }/_layout/${ vars.layout }.pug`, { encoding: "utf-8" }));
@@ -62,7 +63,7 @@ for (const src of allglob) {
 
     
     dirpages[dir] ??= [];
-    dirpages[dir].push({ title: vars.title ?? "#n/a", url, updated: vars.url ?? "#n/a" });
+    dirpages[dir].push({ title: vars.title ?? "#n/a", url, updated: vars.updated ?? "#n/a" });
 
 
     fs.outputJSON(tar, { src, tar, url, content: vars.content });
@@ -86,7 +87,7 @@ for (const src of allglob) {
     src = `${ root }/_layout/sitemap.pug`;
     parsed = pug.render(
         await fs.readFile(src, { encoding: "utf-8" }),
-        { dirpages: dirpages },
+        { dirpages },
     ); 
     await fs.outputFile(`${ root }/_site/sitemap.xml`, parsed, { encoding: "utf-8" });
 }
