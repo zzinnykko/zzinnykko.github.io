@@ -5,6 +5,8 @@ import fs from "fs-extra";
 import path from "node:path";
 import matter from "gray-matter";
 import pug from "pug";
+import { createGenerator } from "unocss";
+import defineConfig from "./uno.config.ts";
 
 
 /**
@@ -19,6 +21,7 @@ const md = markdownit({
         return `<pre><code class="hljs language-${ language }>${ hljs.highlight(str, { language }).value }</code></pre>`;
     },
 });
+const unocss = await createGenerator(defineConfig);
 
 const root = process.cwd();
 await fs.remove(`${ root }/_site`);
@@ -74,7 +77,7 @@ for (const src of allglob) {
  * index.html, 404.html, sitemap.xml 작성
  */
 {
-    console.log(dirpages);
+    // console.log(dirpages);
 
     let src = `${ root }/_layout/layout.pug`
     let parsed = pug.render(
@@ -90,4 +93,25 @@ for (const src of allglob) {
         { dirpages },
     ); 
     await fs.outputFile(`${ root }/_site/sitemap.xml`, parsed, { encoding: "utf-8" });
+}
+
+
+/**
+ * css 생성
+ */
+{
+    const index = await fs.readFile(`${ root }/_site/index.html`, { encoding: "utf-8" });
+
+    // console.log(index);
+
+    const { css } = await unocss.generate(index);
+    await fs.outputFile(`${ root }/_site/global.css`, css, { encoding: "utf-8" });
+}
+
+
+/**
+ * 기타 static 리소스 복사
+ */
+{
+    await fs.copy(`${ root }/_public/`, `${ root }/_site/`);
 }

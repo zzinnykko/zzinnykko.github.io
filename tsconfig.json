@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
         "target": "ESNext",
         "module": "NodeNext",      // 또는 "ESNext"
         "moduleResolution": "NodeNext", // 최신 Node.js 경로 해석 방식

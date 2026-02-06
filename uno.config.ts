@@ -1,10 +1,16 @@
 import extractorPug from "@unocss/extractor-pug";
-import { defineConfig } from "unocss";
+import { defineConfig, presetWind3, transformerDirectives } from "unocss";
 import fs from "fs-extra";
 
 export default defineConfig({
+    presets: [
+        presetWind3(),
+    ],
     extractors: [
         extractorPug(),
+    ],
+    transformers: [
+        transformerDirectives(),
     ],
     content: {
         pipeline: {
