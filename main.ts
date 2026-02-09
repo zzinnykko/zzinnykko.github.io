@@ -5,6 +5,7 @@ import * as path from "@std/path";
 import fs from "fs-extra";
 import matter from "gray-matter";
 import { renderPage, PageProps, renderDir, DirProps } from "./layouts/components.tsx";
+import { renderLayout, LayoutProps } from "./layouts/layouts.tsx";
 
 /**
  * 초기화
@@ -56,4 +57,13 @@ for (const src of allglobs) {
     dirpages[pdir].push({ title, updated, content: "", href });
 
     fs.outputJSON(tar, { title, updated, content });
+}
+
+
+/**
+ * index.html, 404.html 만들기
+ */
+{
+    const html = renderLayout({ dirs: [] });
+    await fs.writeFile("./_site/index.html", html, { encoding: "utf-8" });
 }

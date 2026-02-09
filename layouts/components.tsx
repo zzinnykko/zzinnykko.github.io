@@ -1,31 +1,37 @@
 import { h } from "preact";
 import { render } from "preact-render-to-string";
 
+/**
+ * Page 컴포넌트
+ */
 export type PageProps = { title: string, updated: string, content: string, href: string };
-export function renderPage(props: PageProps): string {
+const Page = (props: PageProps): h.JSX.Element => {
     props.title ??= "#n/a";
     props.updated ??= new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
     props.content ??= "#n/a";
     props.href ??= "#n/a";
 
-    const Component = (
+    return (
         <article class="page">
             <h1 id="page-title">{ props.title }</h1>
             <div class="text-right">Last updated: { props.updated }</div>
             <div class="markdown-body" dangerouslySetInnerHTML={{ __html: props.content }}></div>
         </article>
     );
+};
+export const renderPage = (props: PageProps): string => render(<Page { ...props } />); 
 
-    return render(Component);
-}
 
+/**
+ * Dir 컴포넌트
+ */
 export type DirProps = { title: string, updated: string, pages: PageProps[] };
-export function renderDir(props: DirProps): string {
+const Dir = (props: DirProps): h.JSX.Element => {
     props.title ??= "#n/a";
     props.updated ??= new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
     props.pages ??= [{ title: "#n/a", updated: "#n/a", content: "#n/a", href: "#n/a" }];
 
-    const Component = (
+    return (
         <article class="dir">
             <h1 id="page-title">{ props.title }</h1>
             <div class="text-right">Last updated: { props.updated }</div>
@@ -36,6 +42,5 @@ export function renderDir(props: DirProps): string {
             </div>
         </article>
     );
-
-    return render(Component);
-}
+};
+export const renderDir = (props: DirProps): string => render(<Dir { ...props } />);

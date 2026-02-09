@@ -1,3 +1,5 @@
 {
-    "deno.enable": true
+    "deno.enable": true,
+    "liveServer.settings.file": "",
+    "liveServer.settings.root": "/_site"
 }

@@ -52,7 +52,7 @@
 }
 
 * {
-    @apply leading-1.5;
+    @apply leading-normal;
 }
 .wrapper {
     @apply w-full max-w-240 my-0 mx-auto py-0;
