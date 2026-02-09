@@ -1,8 +1,10 @@
-// @deno-types="npm:@types/markdown-it@14.1";
-import markdownit from "npm:markdown-it@14.1";
-import hljs from "npm:highlight.js@11.11";
-import fg from "npm:fast-glob@3.3";
-import * as path from "jsr:@std/path@1.1";
+import markdownit from "markdown-it";
+import hljs from "highlight.js";
+import fg from "fast-glob";
+import * as path from "@std/path";
+import fs from "fs-extra";
+import matter from "gray-matter";
+import { renderPage, PageProps, renderDir, DirProps } from "./layouts/components.tsx";
 
 /**
  * 초기화
@@ -19,8 +21,9 @@ const md = markdownit({
     },
 });
 const dirpages = {} as {
-    [pdir: string]: { pdir: string, href: string, title: string, updated: string, [key: string]: any }[],
+    [pdir: string]: PageProps[],
 };
+fs.remove("./_site");
 
 
 /**
@@ -34,4 +37,23 @@ for (const src of allglobs) {
     const p = path.parse(src as string);
     const pdir = p.dir;
     const slug = p.name.replace(/\[.*?\]/g, "").trim().replace(/\s+/g, "_");
+    let href = ((pdir === "./dir") ? "/dir/" : "/page/") + slug;
+    const tar = "./_site" + href + ".json";
+    if (href === "/page/index") href = "/";
+    
+    const { title, updated, content } = await (async () => {
+        const m = matter(await fs.readFile(src, { encoding: "utf-8" }));
+        const title = m.data.title || "no title";
+        const updated = m.data.updated || new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
+        const content = (pdir === "./dir")
+            ? renderDir({ title, updated, pages: dirpages[`./page/${ slug }`] })
+            : renderPage({ title, updated, content: m.content, href }); 
+
+        return { title, updated, content };
+    })();
+
+    dirpages[pdir] ??= [];
+    dirpages[pdir].push({ title, updated, content: "", href });
+
+    fs.outputJSON(tar, { title, updated, content });
 }

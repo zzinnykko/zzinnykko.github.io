@@ -2,5 +2,20 @@
     "compilerOptions": {
         "jsx": "react-jsx",
         "jsxImportSource": "npm:preact@10.28"
+    },
+    "imports": {
+        "@std/path": "jsr:@std/path@^1.1.4",
+        "@types/fs-extra": "npm:@types/fs-extra@^11.0.4",
+        "@types/markdown-it": "npm:@types/markdown-it@^14.1.2",
+        "fast-glob": "npm:fast-glob@^3.3.3",
+        "fs-extra": "npm:fs-extra@^11.3.3",
+        "gray-matter": "npm:gray-matter@^4.0.3",
+        "highlight.js": "npm:highlight.js@^11.11.1",
+        "markdown-it": "npm:markdown-it@^14.1.0",
+        "preact": "npm:preact@^10.28.3",
+        "preact-render-to-string": "npm:preact-render-to-string@^6.6.5"
+    },
+    "tasks": {
+        "build": "deno run -A main.ts"
     }
 }
