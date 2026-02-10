@@ -44,3 +44,19 @@ const Dir = (props: DirProps): h.JSX.Element => {
     );
 };
 export const renderDir = (props: DirProps): string => render(<Dir { ...props } />);
+
+
+/**
+ * Sitemap 컴포넌트
+ */
+export type SitemapProps = { [pdir: string]: PageProps[] };
+const Sitemap = (props: SitemapProps): h.JSX.Element => {
+    return (
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            <url>
+                
+            </url>
+        </urlset>
+    );
+};
+export const renderSitemap = (props: SitemapProps): string => `<?xml version="1.0" encoding="UTF-8"?>` + render(<Sitemap { ...props } />);

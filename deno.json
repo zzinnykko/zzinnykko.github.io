@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
         "jsx": "react-jsx",
-        "jsxImportSource": "npm:preact@10.28"
+        "jsxImportSource": "npm:preact@10.28",
+        "lib": [
+            "dom", "esnext"
+        ]
     },
     "imports": {
         "@std/path": "jsr:@std/path@^1.1.4",

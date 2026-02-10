@@ -4,7 +4,7 @@ import fg from "fast-glob";
 import * as path from "@std/path";
 import fs from "fs-extra";
 import matter from "gray-matter";
-import { renderPage, PageProps, renderDir, DirProps } from "./layouts/components.tsx";
+import { renderPage, PageProps, renderDir, DirProps, SitemapProps } from "./layouts/components.tsx";
 import { renderLayout, LayoutProps } from "./layouts/layouts.tsx";
 
 /**
@@ -21,9 +21,7 @@ const md = markdownit({
                 + `</code></pre>`;
     },
 });
-const dirpages = {} as {
-    [pdir: string]: PageProps[],
-};
+const dirpages = {} as SitemapProps;
 fs.remove("./_site");
 
 
@@ -61,9 +59,10 @@ for (const src of allglobs) {
 
 
 /**
- * index.html, 404.html 만들기
+ * index.html, 404.html, sitemap.xml 만들기
  */
 {
     const html = renderLayout({ dirs: [] });
     await fs.writeFile("./_site/index.html", html, { encoding: "utf-8" });
+    await fs.copy("./_site/index.html", "./_site/404.html");
 }
