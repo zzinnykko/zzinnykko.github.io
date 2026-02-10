@@ -4,7 +4,7 @@ import fg from "fast-glob";
 import * as path from "@std/path";
 import fs from "fs-extra";
 import matter from "gray-matter";
-import { renderPage, PageProps, renderDir, DirProps, SitemapProps } from "./layouts/components.tsx";
+import { renderPage, PageProps, renderDir, DirProps, renderSitemap, SitemapProps } from "./layouts/components.tsx";
 import { renderLayout, LayoutProps } from "./layouts/layouts.tsx";
 
 /**
@@ -65,4 +65,5 @@ for (const src of allglobs) {
     const html = renderLayout({ dirs: [] });
     await fs.writeFile("./_site/index.html", html, { encoding: "utf-8" });
     await fs.copy("./_site/index.html", "./_site/404.html");
+    await fs.writeFile("./_site/sitemap.xml", renderSitemap(dirpages), { encoding: "utf-8" });
 }

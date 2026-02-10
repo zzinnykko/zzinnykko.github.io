@@ -51,11 +51,19 @@ export const renderDir = (props: DirProps): string => render(<Dir { ...props } /
  */
 export type SitemapProps = { [pdir: string]: PageProps[] };
 const Sitemap = (props: SitemapProps): h.JSX.Element => {
+    let allpages: PageProps[] = [];
+    for (const pages of Object.values(props)) {
+        allpages.push(...pages);
+    }
+
     return (
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url>
-                
-            </url>
+            { allpages.map((page) => (
+                <url>
+                    <loc>{ "https://zzinnykko.github.io" + page.href }</loc>
+                    <lastmod>{ page.updated }</lastmod>
+                </url>
+            )) }
         </urlset>
     );
 };
