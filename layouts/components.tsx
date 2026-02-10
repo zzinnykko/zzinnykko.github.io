@@ -25,11 +25,12 @@ export const renderPage = (props: PageProps): string => render(<Page { ...props 
 /**
  * Dir 컴포넌트
  */
-export type DirProps = { title: string, updated: string, pages: PageProps[] };
+export type DirProps = { title: string, updated: string, pages: PageProps[], sort: string };
 const Dir = (props: DirProps): h.JSX.Element => {
     props.title ??= "#n/a";
     props.updated ??= new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
     props.pages ??= [{ title: "#n/a", updated: "#n/a", content: "#n/a", href: "#n/a" }];
+    if (props.sort === "desc") props.pages.reverse();
 
     return (
         <article class="dir">

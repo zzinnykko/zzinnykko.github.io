@@ -45,8 +45,8 @@ for (const src of allglobs) {
         const title = m.data.title || "no title";
         const updated = m.data.updated || new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
         const content = (pdir === "./dir")
-            ? renderDir({ title, updated, pages: dirpages[`./page/${ slug }`] })
-            : renderPage({ title, updated, content: m.content, href }); 
+            ? renderDir({ title, updated, pages: dirpages[`./page/${ slug }`], sort: m.data.sort ?? "asc" })
+            : renderPage({ title, updated, content: md.render(m.content), href }); 
 
         return { title, updated, content };
     })();
@@ -62,7 +62,7 @@ for (const src of allglobs) {
  * index.html, 404.html, sitemap.xml 만들기
  */
 {
-    const html = renderLayout({ dirs: [] });
+    const html = renderLayout({ dirs: dirpages["./dir"] });
     await fs.writeFile("./_site/index.html", html, { encoding: "utf-8" });
     await fs.copy("./_site/index.html", "./_site/404.html");
     await fs.writeFile("./_site/sitemap.xml", renderSitemap(dirpages), { encoding: "utf-8" });

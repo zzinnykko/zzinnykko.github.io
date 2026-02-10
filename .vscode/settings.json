@@ -1,5 +1,5 @@
 {
     "deno.enable": true,
-    "liveServer.settings.file": "",
+    "liveServer.settings.file": "404.html",
     "liveServer.settings.root": "/_site"
 }
