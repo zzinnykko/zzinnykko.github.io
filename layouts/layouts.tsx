@@ -1,5 +1,5 @@
-import { h } from "preact";
-import { render } from "preact-render-to-string";
+import { html, raw } from "@hono/hono/html";
+import type { FC } from "@hono/hono/jsx"
 import { PageProps } from "./components.tsx";
 
 
@@ -7,7 +7,46 @@ import { PageProps } from "./components.tsx";
  * Layout 컴포넌트
  */
 export type LayoutProps = { dirs: PageProps[] };
-const Layout = (props: LayoutProps): h.JSX.Element => {
+const Layout: FC<LayoutProps> = (props) => {
+
+    const code = /* javascript */ `
+        const $container = document.getElementById("container");
+
+        window.addEventListener("click-to-top", () => {
+            $container.scrollTo({ top: 0, behavior: "smooth" });
+        });                    
+
+        async function fetchContent() {
+            const reqPathname = window.location.pathname;
+            const tar = ((reqPathname === "/") ? "/page/index" : reqPathname) + ".json";
+
+            window.dispatchEvent(new CustomEvent("fetch-content", { detail: { tar } }));
+        }
+
+        // 주소 직접 입력
+        await fetchContent();
+
+        // 브라우저 전/후 이동 버튼 클릭
+        window.onpopstate = async () => {
+            await fetchContent();
+        };
+
+        // a 태그 클릭
+        document.body.addEventListener("click", async (e) => {
+            const el = e.target;
+
+            // 클릭 태그가 <a> 아니거나, href 도메인이 블로그가 아니거나, 해시태그나 파일(. 으로 판별)이거나, href 가 현재의 주소와 동일하면 리턴
+            if (!el.matches("a")) return;
+            if (!el.href.startsWith(window.location.origin)) return;
+            if (el.href.match(/[#.]/)) return;
+            if (el.href === window.location.href) return;
+
+            e.preventDefault();
+            history.pushState(null, "", el.href);
+            await fetchContent();
+        });
+    `;
+
     return (
         <html lang="ko">
             <head>
@@ -22,57 +61,28 @@ const Layout = (props: LayoutProps): h.JSX.Element => {
                     <div class="wrapper"><Nav { ...props } /></div>
                     <div class="wrapper"><Main /></div>
                     <div class="wrapper sticky top-[100vh]"><Footer /></div>
-                    <div class="hidden" dangerouslySetInnerHTML={{ __html: `
-                        <script type="module">
-                            const $container = document.getElementById("container");
-
-                            window.addEventListener("click-to-top", () => {
-                                $container.scrollTo({ top: 0, behavior: "smooth" });
-                            });                    
-
-                            async function fetchContent() {
-                                const reqPathname = window.location.pathname;
-                                const tar = ((reqPathname === "/") ? "/page/index" : reqPathname) + ".json";
-
-                                window.dispatchEvent(new CustomEvent("fetch-content", { detail: { tar } }));
-                            }
-
-                            // 주소 직접 입력
-                            await fetchContent();
-
-                            // 브라우저 전/후 이동 버튼 클릭
-                            window.onpopstate = async () => {
-                                await fetchContent();
-                            };
-
-                            // a 태그 클릭
-                            document.body.addEventListener("click", async (e) => {
-                                const el = e.target;
-
-                                // 클릭 태그가 <a> 아니거나, href 도메인이 블로그가 아니거나, 해시태그나 파일(. 으로 판별)이거나, href 가 현재의 주소와 동일하면 리턴
-                                if (!el.matches("a")) return;
-                                if (!el.href.startsWith(window.location.origin)) return;
-                                if (el.href.match(/[#.]/)) return;
-                                if (el.href === window.location.href) return;
-
-                                e.preventDefault();
-                                history.pushState(null, "", el.href);
-                                await fetchContent();
-                            });
-                        </script>    
-                    `}}></div>
+                    <script type="module" dangerouslySetInnerHTML={{ __html: code }} />
                 </div>
             </body>
         </html>
     );
 };
-export const renderLayout = (props: LayoutProps) => "<!doctype html>" + render(<Layout { ...props } />);
+export const renderLayout = (props: LayoutProps) => "<!doctype html>" + raw(<Layout { ...props } />).toString();
 
 
 /**
  * Header 컴포넌트
  */
-const Header = (): h.JSX.Element => {
+const Header: FC = () => {
+
+    const code = /* javascript */ `
+        const $toTop = document.getElementById("to-top");
+
+        $toTop.addEventListener("click", (e) => {
+            window.dispatchEvent(new CustomEvent("click-to-top"));
+        });
+    `;
+
     return (
         <header class="py-4 px-1 flex justify-between items-center">
             <div>
@@ -81,15 +91,7 @@ const Header = (): h.JSX.Element => {
             <div>
                 <button id="to-top" type="button">to top</button>
             </div>
-            <div class="hidden" dangerouslySetInnerHTML={{ __html: `
-                <script type="module">
-                    const $toTop = document.getElementById("to-top");
-
-                    $toTop.addEventListener("click", (e) => {
-                        window.dispatchEvent(new CustomEvent("click-to-top"));
-                    });
-                </script>
-            ` }} />
+            <script type="module" dangerouslySetInnerHTML={{ __html: code }} />
         </header>
     );
 };
@@ -98,7 +100,7 @@ const Header = (): h.JSX.Element => {
 /**
  * Nav 컴포넌트
  */
-const Nav = (props: LayoutProps): h.JSX.Element => {
+const Nav: FC<LayoutProps> = (props) => {
     // console.log(props);
 
     return (
@@ -119,36 +121,37 @@ const Nav = (props: LayoutProps): h.JSX.Element => {
 /**
  * Main 컴포넌트
  */
-const Main = (): h.JSX.Element => {
+const Main: FC = () => {
+
+    const code = /* javascript */ `
+        const $attachJsonHere = document.getElementById("attach-json-here");
+        
+        window.addEventListener("fetch-content", async (e) => {
+            let tar = e.detail.tar;
+
+            console.log(tar);
+
+            let res = await fetch(tar);
+            let content = {};
+
+            if (res.status !== 200) {
+                tar = "/page/404.json";
+                res = fetch(tar);
+            }
+
+            try {
+                content = await res.json();
+            } catch (err) {
+                content = { content: tar + " is not a valid json file" };
+            }
+
+            $attachJsonHere.innerHTML = content.content;
+        });
+    `;
+
     return (
         <main id="attach-json-here" class="py-4 px-1">
-            <div class="hidden" dangerouslySetInnerHTML={{ __html: `
-                <script type="module">
-                    const $attachJsonHere = document.getElementById("attach-json-here");
-                    
-                    window.addEventListener("fetch-content", async (e) => {
-                        let tar = e.detail.tar;
-
-                        console.log(tar);
-
-                        let res = await fetch(tar);
-                        let content = {};
-
-                        if (res.status !== 200) {
-                            tar = "/page/404.json";
-                            res = fetch(tar);
-                        }
-
-                        try {
-                            content = await res.json();
-                        } catch (err) {
-                            content = { content: tar + " is an invalid json file" };
-                        }
-
-                        $attachJsonHere.innerHTML = content.content;
-                    });
-                </script>
-                ` }}></div>
+            <script type="module" dangerouslySetInnerHTML={{ __html: code }} />
         </main>
     );
 };
@@ -157,7 +160,7 @@ const Main = (): h.JSX.Element => {
 /**
  * Footer 컴포넌트
  */
-const Footer = (): h.JSX.Element => {
+const Footer: FC = () => {
     return (
         <footer class="py-4 px-1 flex justify-center items-center flex-nowrap">
             <div>this blog is designed by zzinnykko,</div>

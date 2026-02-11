@@ -1,5 +1,8 @@
 {
     "recommendations": [
-        "ritwickdey.liveserver"
+        "ritwickdey.liveserver",
+        "denoland.vscode-deno",
+        "antfu.unocss",
+        "tobermory.es6-string-html"
     ]
 }

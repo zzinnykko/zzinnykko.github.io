@@ -5,7 +5,6 @@ import * as path from "@std/path";
 import fs from "fs-extra";
 import matter from "gray-matter";
 import { renderPage, PageProps, renderDir, DirProps, renderSitemap, SitemapProps } from "./layouts/components.tsx";
-import { renderLayout, LayoutProps } from "./layouts/layouts.tsx";
 
 /**
  * 초기화
@@ -22,7 +21,7 @@ const md = markdownit({
     },
 });
 const dirpages = {} as SitemapProps;
-fs.remove("./_site");
+// fs.remove("./_site");
 
 
 /**
@@ -59,11 +58,6 @@ for (const src of allglobs) {
 
 
 /**
- * index.html, 404.html, sitemap.xml 만들기
+ * dirpages 저장
  */
-{
-    const html = renderLayout({ dirs: dirpages["./dir"] });
-    await fs.writeFile("./_site/index.html", html, { encoding: "utf-8" });
-    await fs.copy("./_site/index.html", "./_site/404.html");
-    await fs.writeFile("./_site/sitemap.xml", renderSitemap(dirpages), { encoding: "utf-8" });
-}
+await fs.outputJSON("./_site/dirpages.json", dirpages, { encoding: "utf-8" });

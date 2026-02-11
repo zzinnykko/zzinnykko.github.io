@@ -1,0 +1,15 @@
+* {
+    @apply leading-normal;
+}
+.wrapper {
+    @apply w-full max-w-240 my-0 mx-auto py-0;
+}
+button {
+    @apply outline-0 border-b border-dotted text-blue-600 cursor-pointer;
+}
+a, a:focus, a:hover, a:link, a:visited {
+    @apply border-b border-dotted text-blue-600 font-normal;
+}
+b, strong {
+    @apply border-b border-dotted text-red-600 font-normal;
+}
