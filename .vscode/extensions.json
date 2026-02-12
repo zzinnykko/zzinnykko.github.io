@@ -1,8 +1,0 @@
-{
-  "recommendations": [
-    "github.vscode-github-actions",
-    "antfu.unocss",
-    "ritwickdey.liveserver"
-  ],
-  "unwantedRecommendations": []
-}
