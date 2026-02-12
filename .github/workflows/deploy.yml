@@ -18,7 +18,7 @@ jobs:
       - name: Merge deno branch
         run: |
           git fetch origin deno
-          git merge origin/deno --no-edit
+          git merge origin/deno --no-edit --allow-unrelated-histories
 
       - name: Setup Deno
         uses: denoland/setup-deno@v1
