@@ -15,6 +15,11 @@ jobs:
         with:
           ref: main
 
+      - name: Setup Git identity
+        run: |
+          git config --global user.name "zzinnykko"
+          git config --global user.email "zzinnykko@outlook.com"
+
       - name: Merge deno branch
         run: |
           git fetch origin deno
