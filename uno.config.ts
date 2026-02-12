@@ -1,7 +1,7 @@
-@import "tailwindcss";
+import { defineConfig, presetWind3, transformerDirectives } from "unocss";
 
-@layer base {
 
+const reset = /* css */ `
     /* http://meyerweb.com/eric/tools/css/reset/ 
         v2.0 | 20110126
         License: none (public domain)
@@ -50,20 +50,25 @@
         border-collapse: collapse;
         border-spacing: 0;
     }
-}
+`;
 
-* {
-    @apply leading-normal;
-}
-.wrapper {
-    @apply w-full max-w-240 my-0 mx-auto py-0;
-}
-button {
-    @apply outline-0 border-b border-dotted text-blue-600 cursor-pointer;
-}
-a, a:focus, a:hover, a:link, a:visited {
-    @apply border-b border-dotted text-blue-600 font-normal;
-}
-b, strong {
-    @apply border-b border-dotted text-red-600 font-normal;
-}
+
+export default defineConfig({
+    cli: {
+        entry: {
+            outFile: "./_site/global.css",
+            patterns: ["./resources/*.css", "./layouts/**/*.tsx"],
+        },
+    },
+    preflights: [
+        {
+            getCSS: () => reset,
+        }
+    ],
+    presets: [
+        presetWind3(),
+    ],
+    transformers: [
+        transformerDirectives(),
+    ],
+});

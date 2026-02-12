@@ -2,7 +2,7 @@
     "recommendations": [
         "ritwickdey.liveserver",
         "denoland.vscode-deno",
-        "antfu.unocss",
-        "tobermory.es6-string-html"
+        "tobermory.es6-string-html",
+        "antfu.unocss"
     ]
 }
