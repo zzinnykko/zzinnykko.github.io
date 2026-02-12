@@ -162,7 +162,7 @@ const Main: FC = () => {
  */
 const Footer: FC = () => {
     return (
-        <footer class="py-4 px-1 flex justify-center items-center flex-nowrap gap-x-4 flex-col">
+        <footer class="py-4 px-1 flex justify-center items-center flex-wrap gap-x-4">
             <div>this blog is designed by zzinnykko,</div>
             <div>built with deno,</div>
             <div>and powered by github pages</div>
