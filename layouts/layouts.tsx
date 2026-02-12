@@ -57,7 +57,7 @@ const Layout: FC<LayoutProps> = (props) => {
             </head>
             <body>
                 <div id="container" class="fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll">
-                    <div class="wrapper sticky top-0"><Header /></div>
+                    <div class="wrapper sticky top-0 bg-white"><Header /></div>
                     <div class="wrapper"><Nav { ...props } /></div>
                     <div class="wrapper"><Main /></div>
                     <div class="wrapper sticky top-[100vh]"><Footer /></div>
@@ -162,7 +162,7 @@ const Main: FC = () => {
  */
 const Footer: FC = () => {
     return (
-        <footer class="py-4 px-1 flex justify-center items-center flex-nowrap">
+        <footer class="py-4 px-1 flex justify-center items-center flex-nowrap gap-x-4 flex-col">
             <div>this blog is designed by zzinnykko,</div>
             <div>built with deno,</div>
             <div>and powered by github pages</div>

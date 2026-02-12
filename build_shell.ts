@@ -12,3 +12,8 @@ const html = renderLayout({ dirs: dirpages["./dir"] });
 await fs.writeFile("./_site/index.html", html, { encoding: "utf-8" });
 await fs.copy("./_site/index.html", "./_site/404.html");
 await fs.writeFile("./_site/sitemap.xml", renderSitemap(dirpages), { encoding: "utf-8" });
+
+/**
+ * font 복사
+ */
+await fs.copy("./resources/font.woff2", "./_site/font.woff2");
