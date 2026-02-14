@@ -1,17 +1,36 @@
 ---
-
+import {globs} from "../lib/lib.ts";
+import Base from "../layouts/Base.astro";
+import Header from "../layouts/Header.astro";
+import Footer from "../layouts/Footer.astro";
 ---
+<Base>
+	<div id="layout" class="fixed top-0 right-0 bottom-0 left-0">
+		<div class="wrapper sticky top-0"><Header /></div>
+		<div class="wrapper">Nav</div>
+		<div class="wrapper">Main</div>
+		<div class="wrapper sticky top-[100vh]"><Footer /></div>
+		{
+			JSON.stringify(globs)
+		}
+	</div>
+</Base>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<style is:global>
+	@font-face {
+		font-family: 'D2Coding';
+		font-style: normal;
+		font-weight: 400;
+		font-display: block;
+		src: local('D2Coding Regular'),
+			url('https://cdn.jsdelivr.net/gh/wan2land/d2coding/fonts/d2coding-full.woff2') format('woff2'),
+			url('https://cdn.jsdelivr.net/gh/wan2land/d2coding/fonts/d2coding-full.woff') format('woff'),
+			url('https://cdn.jsdelivr.net/gh/wan2land/d2coding/fonts/d2coding-full.ttf') format('truetype');
+	}
+	* {
+		@apply leading-normal font-[D2Coding,monospace_!important];
+	}
+	.wrapper {
+		@apply w-full max-w-240 my-0 mx-auto p-0;
+	}
+</style>
