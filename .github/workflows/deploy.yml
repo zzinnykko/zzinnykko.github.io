@@ -20,15 +20,15 @@ jobs:
         with:
           ref: main
 
-      - name: Setup Git identity
-        run: |
-          git config --global user.name "zzinnykko"
-          git config --global user.email "zzinnykko@outlook.com"
+      # - name: Setup Git identity
+      #   run: |
+      #     git config --global user.name "zzinnykko"
+      #     git config --global user.email "zzinnykko@outlook.com"
 
-      - name: Merge deno branch
-        run: |
-          git fetch origin deno
-          git merge origin/deno --no-edit --allow-unrelated-histories
+      # - name: Merge deno branch
+      #   run: |
+      #     git fetch origin deno
+      #     git merge origin/deno --no-edit --allow-unrelated-histories
 
       - name: Setup Deno
         uses: denoland/setup-deno@v1
