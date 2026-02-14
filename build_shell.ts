@@ -16,4 +16,4 @@ await fs.writeFile("./_site/sitemap.xml", renderSitemap(dirpages), { encoding: "
 /**
  * font 복사
  */
-await fs.copy("./resources/font.woff2", "./_site/font.woff2");
+await fs.copy("./resources/*.*", "./_site/*.*");

@@ -46,6 +46,20 @@ const Layout: FC<LayoutProps> = (props) => {
             await fetchContent();
         });
     `;
+    
+    // srouce: https://github.com/wan2land/d2coding
+    const css = /* css */`
+        @font-face {
+            font-family: 'D2Coding';
+            font-style: normal;
+            font-weight: 400;
+            font-display: block; /* 로딩 후 표시 */
+            src: local('D2Coding Regular'),
+                url('https://cdn.jsdelivr.net/gh/wan2land/d2coding/fonts/d2coding-full.woff2') format('woff2'),
+                url('https://cdn.jsdelivr.net/gh/wan2land/d2coding/fonts/d2coding-full.woff') format('woff'),
+                url('https://cdn.jsdelivr.net/gh/wan2land/d2coding/fonts/d2coding-full.ttf') format('truetype');
+        }
+    `;
 
     return (
         <html lang="ko">
@@ -53,10 +67,20 @@ const Layout: FC<LayoutProps> = (props) => {
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
                 <title>zzinnykko's blog</title>
+                <link rel="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+                <link rel="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css" />
                 <link rel="stylesheet" href="/global.css" />
+                <style dangerouslySetInnerHTML={{__html: css}} />
             </head>
             <body>
-                <div id="container" class="fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll">
+                <div id="container" class="
+                    fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll
+                    [&_*]:(font-[D2Coding,monospace_!important] leading-normal)
+                    [&_.wrapper]:(max-w-240 w-full my-0 mx-auto py-0)
+                    [&_button]:(outline-0 border-0 border-b border-dotted text-blue-600 cursor-pointer bg-transparent text-4)
+                    [&_a,&_a:focus,&_a:hover,&_a:link,&_a:visited]:(border-b border-dotted text-blue-600 font-normal decoration-none)
+                    [&_b,&_strong]:(border-b border-dotted text-red-600 font-normal)
+                ">
                     <div class="wrapper sticky top-0 bg-white"><Header /></div>
                     <div class="wrapper"><Nav { ...props } /></div>
                     <div class="wrapper"><Main /></div>

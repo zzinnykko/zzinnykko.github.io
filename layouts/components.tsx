@@ -1,6 +1,7 @@
 import { html, raw } from "@hono/hono/html";
 import type { FC } from "@hono/hono/jsx"
 
+
 /**
  * Page 컴포넌트
  */
@@ -12,11 +13,17 @@ const Page: FC<PageProps> = (props) => {
     props.href ??= "#n/a";
 
     return (
-        <article class="page">
-            <h1 id="page-title">{ props.title }</h1>
+        <>
+            <h1 id="page-title" class="text-12">{ props.title }</h1>
             <div class="text-right">Last updated: { props.updated }</div>
-            <div class="markdown-body" dangerouslySetInnerHTML={{ __html: props.content }}></div>
-        </article>
+            <article class="
+                page
+                [&_h2]:(before:(content-['#_']) text-8 mt-8 mb-4)
+                [&_p,&_ul,&_pre,&_blockquote]:(my-4)
+                [&_blockquote,&_pre>code]:(block p-4 bg-gray-300)
+                [&_ul>li]:(before:(content-['-'] inline-block w-4 ml--4) ml-4)
+            " dangerouslySetInnerHTML={{ __html: props.content }} />
+        </>
     );
 };
 export const renderPage = (props: PageProps): string => raw(<Page { ...props } />).toString(); 
@@ -33,17 +40,23 @@ const Dir: FC<DirProps> = (props) => {
     if (props.sort === "desc") props.pages.reverse();
 
     return (
-        <article class="dir">
+        <>
             <h1 id="page-title">{ props.title }</h1>
             <div class="text-right">Last updated: { props.updated }</div>
-            <div class="postlist-body">
-                {
-                    props.pages.map((page) => (
-                        <li><a href={ page.href }>{ page.title }</a><span>, Last updated: { page.updated }</span></li>
-                    ))
-                }
-            </div>
-        </article>
+            <article class="
+                dir
+                [&_ul]:(my-4)
+                [&_ul>li]:(before:(content-['-'] inline-block w-4 ml--4) ml-4)
+            ">
+                <ul>
+                    {
+                        props.pages.map((page) => (
+                            <li><a href={ page.href }>{ page.title }</a><span>, Last updated: { page.updated }</span></li>
+                        ))
+                    }
+                </ul>
+            </article>
+        </>
     );
 };
 export const renderDir = (props: DirProps): string => raw(<Dir { ...props } />).toString();

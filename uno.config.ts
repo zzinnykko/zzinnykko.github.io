@@ -1,4 +1,4 @@
-import { defineConfig, presetWind3, transformerDirectives } from "unocss";
+import { defineConfig, presetWind3, transformerDirectives, transformerVariantGroup } from "unocss";
 
 
 const reset = /* css */ `
@@ -10,7 +10,7 @@ export default defineConfig({
     cli: {
         entry: {
             outFile: "./_site/global.css",
-            patterns: ["./resources/*.css", "./layouts/**/*.tsx"],
+            patterns: ["./layouts/**/*.tsx"],
         },
     },
     preflights: [
@@ -23,5 +23,6 @@ export default defineConfig({
     ],
     transformers: [
         transformerDirectives(),
+        transformerVariantGroup(),
     ],
 });

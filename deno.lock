@@ -1,41 +1,26 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@hono/hono@^4.11.9": "4.11.9",
-    "jsr:@std/fs@1.0": "1.0.21",
+    "jsr:@hono/hono@4.11.9": "4.11.9",
     "jsr:@std/internal@^1.0.12": "1.0.12",
-    "jsr:@std/path@1.1": "1.1.4",
-    "jsr:@std/path@^1.1.4": "1.1.4",
+    "jsr:@std/path@1.1.4": "1.1.4",
     "npm:@tailwindcss/cli@*": "4.1.18",
     "npm:@tailwindcss/cli@4.1": "4.1.18",
-    "npm:@types/fs-extra@^11.0.4": "11.0.4",
-    "npm:@types/markdown-it@14.1": "14.1.2",
-    "npm:@types/markdown-it@^14.1.2": "14.1.2",
+    "npm:@types/fs-extra@11.0.4": "11.0.4",
+    "npm:@types/markdown-it@14.1.2": "14.1.2",
     "npm:@unocss/cli@*": "66.6.0",
     "npm:@unocss/cli@66.6": "66.6.0",
-    "npm:fast-glob@3.3": "3.3.3",
-    "npm:fast-glob@^3.3.3": "3.3.3",
-    "npm:fs-extra@*": "11.3.3",
-    "npm:fs-extra@11.3": "11.3.3",
-    "npm:fs-extra@^11.3.3": "11.3.3",
-    "npm:gray-matter@^4.0.3": "4.0.3",
-    "npm:highlight.js@11.11": "11.11.1",
-    "npm:highlight.js@^11.11.1": "11.11.1",
-    "npm:markdown-it@14.1": "14.1.0",
-    "npm:markdown-it@^14.1.0": "14.1.0",
+    "npm:fast-glob@3.3.3": "3.3.3",
+    "npm:fs-extra@11.3.3": "11.3.3",
+    "npm:gray-matter@4.0.3": "4.0.3",
+    "npm:highlight.js@11.11.1": "11.11.1",
+    "npm:markdown-it@14.1.0": "14.1.0",
     "npm:tailwindcss@3.4": "3.4.19_postcss@8.5.6_jiti@1.21.7",
-    "npm:unocss@^66.6.0": "66.6.0_postcss@8.5.6"
+    "npm:unocss@66.6.0": "66.6.0"
   },
   "jsr": {
     "@hono/hono@4.11.9": {
       "integrity": "c82c6b846abc3c1879d921d8365287d77cdef8073019f509ff80bf53033bdcba"
-    },
-    "@std/fs@1.0.21": {
-      "integrity": "d720fe1056d78d43065a4d6e0eeb2b19f34adb8a0bc7caf3a4dbf1d4178252cd",
-      "dependencies": [
-        "jsr:@std/internal",
-        "jsr:@std/path@^1.1.4"
-      ]
     },
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
@@ -662,8 +647,8 @@
     "@types/mdurl@2.0.0": {
       "integrity": "sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg=="
     },
-    "@types/node@25.2.2": {
-      "integrity": "sha512-BkmoP5/FhRYek5izySdkOneRyXYN35I860MFAGupTdebyE66uZaR+bXLHq8k4DirE5DwQi3NuhvRU1jqTVwUrQ==",
+    "@types/node@25.2.3": {
+      "integrity": "sha512-m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ==",
       "dependencies": [
         "undici-types"
       ]
@@ -1648,7 +1633,7 @@
     "universalify@2.0.1": {
       "integrity": "sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw=="
     },
-    "unocss@66.6.0_postcss@8.5.6": {
+    "unocss@66.6.0": {
       "integrity": "sha512-B5QsMJzFKeTHPzF5Ehr8tSMuhxzbCR9n+XP0GyhK9/2jTcBdI0/T+rCDDr9m6vUz+lku/coCVz7VAQ2BRAbZJw==",
       "dependencies": [
         "@unocss/astro",
@@ -1703,16 +1688,16 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@hono/hono@^4.11.9",
-      "jsr:@std/path@^1.1.4",
-      "npm:@types/fs-extra@^11.0.4",
-      "npm:@types/markdown-it@^14.1.2",
-      "npm:fast-glob@^3.3.3",
-      "npm:fs-extra@^11.3.3",
-      "npm:gray-matter@^4.0.3",
-      "npm:highlight.js@^11.11.1",
-      "npm:markdown-it@^14.1.0",
-      "npm:unocss@^66.6.0"
+      "jsr:@hono/hono@4.11.9",
+      "jsr:@std/path@1.1.4",
+      "npm:@types/fs-extra@11.0.4",
+      "npm:@types/markdown-it@14.1.2",
+      "npm:fast-glob@3.3.3",
+      "npm:fs-extra@11.3.3",
+      "npm:gray-matter@4.0.3",
+      "npm:highlight.js@11.11.1",
+      "npm:markdown-it@14.1.0",
+      "npm:unocss@66.6.0"
     ]
   }
 }
