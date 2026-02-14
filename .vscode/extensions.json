@@ -1,8 +1,4 @@
 {
-    "recommendations": [
-        "ritwickdey.liveserver",
-        "denoland.vscode-deno",
-        "tobermory.es6-string-html",
-        "antfu.unocss"
-    ]
+  "recommendations": ["astro-build.astro-vscode"],
+  "unwantedRecommendations": []
 }
