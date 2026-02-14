@@ -18,10 +18,12 @@ const Page: FC<PageProps> = (props) => {
             <div class="text-right">Last updated: { props.updated }</div>
             <article class="
                 page
-                [&_h2]:(before:(content-['#_']) text-8 mt-8 mb-4)
+                [&_h2]:(text-8 mt-8 mb-4)
+                [&_h2:before]:(content-['#_'])
                 [&_p,&_ul,&_pre,&_blockquote]:(my-4)
                 [&_blockquote,&_pre>code]:(block p-4 bg-gray-300)
-                [&_ul>li]:(before:(content-['-'] inline-block w-4 ml--4) ml-4)
+                [&_ul>li]:(ml-4)
+                [&_ul>li:before]:(content-['-'] inline-block w-4 ml--4)
             " dangerouslySetInnerHTML={{ __html: props.content }} />
         </>
     );
@@ -46,7 +48,8 @@ const Dir: FC<DirProps> = (props) => {
             <article class="
                 dir
                 [&_ul]:(my-4)
-                [&_ul>li]:(before:(content-['-'] inline-block w-4 ml--4) ml-4)
+                [&_ul>li]:(ml-4)
+                [&_ul>li:before]:(content-['-'] inline-block w-4 ml--4)
             ">
                 <ul>
                     {

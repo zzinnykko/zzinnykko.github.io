@@ -6,16 +6,19 @@
     "jsr:@std/path@1.1.4": "1.1.4",
     "npm:@tailwindcss/cli@*": "4.1.18",
     "npm:@tailwindcss/cli@4.1": "4.1.18",
+    "npm:@tailwindcss/cli@^4.1.18": "4.1.18",
     "npm:@types/fs-extra@11.0.4": "11.0.4",
     "npm:@types/markdown-it@14.1.2": "14.1.2",
     "npm:@unocss/cli@*": "66.6.0",
     "npm:@unocss/cli@66.6": "66.6.0",
+    "npm:@unocss/cli@66.6.0": "66.6.0",
     "npm:fast-glob@3.3.3": "3.3.3",
     "npm:fs-extra@11.3.3": "11.3.3",
     "npm:gray-matter@4.0.3": "4.0.3",
     "npm:highlight.js@11.11.1": "11.11.1",
     "npm:markdown-it@14.1.0": "14.1.0",
     "npm:tailwindcss@3.4": "3.4.19_postcss@8.5.6_jiti@1.21.7",
+    "npm:tailwindcss@^4.1.18": "4.1.18",
     "npm:unocss@66.6.0": "66.6.0"
   },
   "jsr": {
@@ -1690,6 +1693,7 @@
     "dependencies": [
       "jsr:@hono/hono@4.11.9",
       "jsr:@std/path@1.1.4",
+      "npm:@tailwindcss/cli@^4.1.18",
       "npm:@types/fs-extra@11.0.4",
       "npm:@types/markdown-it@14.1.2",
       "npm:fast-glob@3.3.3",
@@ -1697,6 +1701,7 @@
       "npm:gray-matter@4.0.3",
       "npm:highlight.js@11.11.1",
       "npm:markdown-it@14.1.0",
+      "npm:tailwindcss@^4.1.18",
       "npm:unocss@66.6.0"
     ]
   }

@@ -61,6 +61,11 @@ const Layout: FC<LayoutProps> = (props) => {
         }
     `;
 
+    /* css */`
+        * { @apply text-16}
+    
+    `;
+
     return (
         <html lang="ko">
             <head>
@@ -75,11 +80,7 @@ const Layout: FC<LayoutProps> = (props) => {
             <body>
                 <div id="container" class="
                     fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll
-                    [&_*]:(font-[D2Coding,monospace_!important] leading-normal)
-                    [&_.wrapper]:(max-w-240 w-full my-0 mx-auto py-0)
-                    [&_button]:(outline-0 border-0 border-b border-dotted text-blue-600 cursor-pointer bg-transparent text-4)
-                    [&_a,&_a:focus,&_a:hover,&_a:link,&_a:visited]:(border-b border-dotted text-blue-600 font-normal decoration-none)
-                    [&_b,&_strong]:(border-b border-dotted text-red-600 font-normal)
+                    [&_*]:font-[D2Coding,monospace_!important] [&_*]:leading-normal
                 ">
                     <div class="wrapper sticky top-0 bg-white"><Header /></div>
                     <div class="wrapper"><Nav { ...props } /></div>
