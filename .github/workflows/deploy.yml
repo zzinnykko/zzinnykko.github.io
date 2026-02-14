@@ -31,7 +31,7 @@ jobs:
       #     git merge origin/deno --no-edit --allow-unrelated-histories
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
           deno-version: v2.6
 
