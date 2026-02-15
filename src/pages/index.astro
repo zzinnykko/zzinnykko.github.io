@@ -1,20 +1,59 @@
 ---
-import {globs} from "../lib/lib.ts";
+import { parsemd } from "../lib/lib.ts";
 import Base from "../layouts/Base.astro";
 import Header from "../layouts/Header.astro";
+import Nav from "../layouts/Nav.astro";
 import Footer from "../layouts/Footer.astro";
+
+await parsemd();
+
 ---
 <Base>
 	<div id="layout" class="fixed top-0 right-0 bottom-0 left-0">
 		<div class="wrapper sticky top-0"><Header /></div>
-		<div class="wrapper">Nav</div>
+		<div class="wrapper"><Nav /></div>
 		<div class="wrapper">Main</div>
 		<div class="wrapper sticky top-[100vh]"><Footer /></div>
-		{
-			JSON.stringify(globs)
-		}
+		
 	</div>
 </Base>
+
+<script>
+	const $layout = document.getElementById("layout");
+	window.addEventListener("click-to-top", () => {
+		$layout?.scrollTo({ top: 0, behavior: "smooth" });
+	});
+
+	async function fetchContent() {
+		const reqPathname = window.location.pathname;
+		const tar = ((reqPathname === "/") ? "/page/index" : reqPathname) + ".json";
+
+		window.dispatchEvent(new CustomEvent("fetch-content", { detail: { tar } }));
+	}
+
+	// 주소 직접 입력
+	await fetchContent();
+
+	// 브라우저 전/후 이동 버튼 클릭
+	window.onpopstate = async () => {
+		await fetchContent();
+	};
+
+	// a 태그 클릭
+	document.body.addEventListener("click", async (e) => {
+		const el = e.target as HTMLLinkElement;
+
+		// 클릭 태그가 <a> 아니거나, href 도메인이 블로그가 아니거나, 해시태그나 파일(. 으로 판별)이거나, href 가 현재의 주소와 동일하면 리턴
+		if (!el.matches("a")) return;
+		if (!el.href.startsWith(window.location.origin)) return;
+		if (el.href.match(/[#.]/)) return;
+		if (el.href === window.location.href) return;
+
+		e.preventDefault();
+		history.pushState(null, "", el.href);
+		await fetchContent();
+	});
+</script>
 
 <style is:global>
 	@font-face {
@@ -32,5 +71,11 @@ import Footer from "../layouts/Footer.astro";
 	}
 	.wrapper {
 		@apply w-full max-w-240 my-0 mx-auto p-0;
+	}
+	a, a:focus, a:hover, a:link, a:visited {
+		@apply border-b border-dotted border-blue-600 text-blue-600 decoration-none;
+	}
+	b, strong {
+		@apply border-b border-dotted border-red-600;
 	}
 </style>

@@ -1,6 +1,16 @@
 ---
+import dirpages from "../../parsed/dirpages.json";
+
+const dirs = dirpages["/markdown/dir"] ?? [];
 ---
 
 <nav class="py-4 px-1">
-    
+    <ul class="flex flex-wrap justify-left items-center gap-x-4">
+        <li>카테고리:</li>
+        {
+            dirs.map((dir) => (
+                <li><a href={ dir.href }>{ dir.title }</a></li>
+            ))
+        }
+    </ul>
 </nav>

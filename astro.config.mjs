@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import UnoCSS from "@unocss/astro";
+import { parsemd } from "./src/lib/lib.ts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,6 +9,7 @@ export default defineConfig({
         UnoCSS({
             injectReset: true,
         }),
+        // setPrerender(),
     ],
     markdown: {
         remarkPlugins: [remarkUpdateFrontmatter],
@@ -22,6 +24,9 @@ export default defineConfig({
                 ]
             }
         },
+    },
+    build: {
+        format: "file",
     }
 });
 
@@ -34,3 +39,15 @@ function remarkUpdateFrontmatter() {
         astro.frontmatter.layout = (layout === "dir") ? "/src/layouts/dir.astro" : "/src/layouts/page.astro";
     }
 }
+
+// function setPrerender() {
+//     return {
+//         name: "set-prerender",
+//         hooks: {
+//             // @ts-ignore
+//             "astro:build:generated": async () => {
+//                 await parsemd();
+//             },
+//         },
+//     };
+// }

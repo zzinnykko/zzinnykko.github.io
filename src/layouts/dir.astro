@@ -1,2 +1,22 @@
 ---
+import dirpages from "../../parsed/dirpages.json";
+
+
+const { title, updated, slug } = Astro.props;
+const dir = "/markdown/page/" + slug as string
+// @ts-ignore
+const pages = dirpages[dir] ?? [];
+
 ---
+
+<article class="dir"></article>
+    <h1 id="page-title" class="text-12">{ title } 카테고리</h1>
+    <p class="text-right">Last updated: { updated }</p>
+    <ul>
+        {
+            pages.map((page) => (
+                <li><a href={ page.href }>{ page.title }</a>, Last udpated: { page.updated }</li>
+            ))
+        }
+    </ul>
+</article>
