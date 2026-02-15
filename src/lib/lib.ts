@@ -28,7 +28,7 @@ async function p(src: string, loader: () => Promise<unknown>) {
     dirpages[dir] ??= [];
     dirpages[dir].push({ title, updated, href, content: "", dir });
 
-    fs.outputJSON(tar, { title, updated, href, content, dir }, { encoding: "utf-8" });
+    await fs.outputJSON(tar, { title, updated, href, content, dir }, { encoding: "utf-8" });
 }
 
 async function parsemd2()  {
@@ -39,7 +39,7 @@ async function parsemd2()  {
         await p(src, loader);       
     }
 
-    fs.outputJSON("./parsed/dirpages.json", dirpages, { encoding: "utf-8" });
+    await fs.outputJSON("./parsed/dirpages.json", dirpages, { encoding: "utf-8" });
 }
 
 async function parsemd1() {
@@ -50,5 +50,5 @@ async function parsemd1() {
         await p(src, loader);       
     }
 
-    fs.outputJSON("./parsed/dirpages.json", dirpages, { encoding: "utf-8" });
+    await fs.outputJSON("./parsed/dirpages.json", dirpages, { encoding: "utf-8" });
 }
