@@ -13,6 +13,9 @@ export default defineConfig({
     ],
     markdown: {
         remarkPlugins: [remarkUpdateFrontmatter],
+        shikiConfig: {
+            theme: "github-light-default",
+        }
     },
     vite: {
         server: {

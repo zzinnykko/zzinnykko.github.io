@@ -13,8 +13,12 @@ export async function getStaticPaths() {
     const result = [];
     
     for (const dir of alldir) {
-        const title = dir.data.title ?? "#n/a: no title";
-        const updated = dir.data.updated ?? new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
+        const title = dir.data.title || "#n/a: no title";
+        const updated = dir.data.updated || new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
+        Object.assign(dir.data, { title, updated });
+
+        console.log(dir.data);
+
         const { name } = path.parse(dir.filePath ?? "");
         const slug = name.replace(/\[.*?\]/, "").trim().replace(/\s+/, "_");
         let href = "/page/" + slug;

@@ -8,32 +8,3 @@ const { frontmatter } = Astro.props;
 
         <slot />
 </article>
-
-<style is:global>
-    article.page {
-        h2 {
-            @apply text-8 my-8 mb-4;
-            &:before {
-                @apply content-["#_"];
-            }
-        }
-        p, ul, pre, blockquote {
-            @apply my-4;
-        }
-        pre > code, blockquote {
-            @apply p-4 bg-gray-300;
-        }
-        ul > li {
-            @apply block ml-4;
-            &:before {
-                @apply content-["-"] inline-block w-4 ml--4;
-            }
-        }
-        img {
-            @apply block max-w-full mx-auto;
-        }
-        p > code, ul > code {
-            @apply border-b border-1 border-dotted;
-        }
-    }
-</style>

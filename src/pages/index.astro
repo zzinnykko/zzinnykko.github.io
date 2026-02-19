@@ -8,12 +8,20 @@ import Footer from "../layouts/Footer.astro";
 
 ---
 <Base>
-	<div id="layout" class="fixed top-0 right-0 bottom-0 left-0">
-		<div class="wrapper sticky top-0"><Header /></div>
-		<div class="wrapper"><Nav /></div>
-		<div class="wrapper"><Main /></div>
-		<div class="wrapper sticky top-[100vh]"><Footer /></div>
-		
+	<div id="layout" class="fixed top-0 right-0 bottom-0 left-0 overflow-y-scroll">
+		<div class=" sticky top-0 bg-white">
+			<div class="wrapper"><Header /></div>
+		</div>
+		<div>
+			<div class="wrapper"><Nav /></div>
+		</div>
+		<div>
+			<div class="wrapper"><Main /></div>
+		</div>
+		<div>
+			<div class="wrapper sticky top-[100vh]"><Footer /></div>
+		</div>
+	
 	</div>
 </Base>
 

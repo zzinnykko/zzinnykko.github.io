@@ -13,8 +13,10 @@ export async function getStaticPaths() {
     const result = [];
     
     for (const page of allpage) {
-        const title = page.data.title ?? "#n/a: no title";
-        const updated = page.data.updated ?? new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
+        const title = page.data.title || "#n/a: no title";
+        const updated = page.data.updated || new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
+        Object.assign(page.data, { title, updated });
+
         const { name } = path.parse(page.filePath ?? "");
         const slug = name.replace(/\[.*?\]/, "").trim().replace(/\s+/, "_");
         let href = "/page/" + slug;
