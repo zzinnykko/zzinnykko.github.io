@@ -1,7 +1,18 @@
 ---
-import dirpages from "../../parsed/dirpages.json";
+import { getCollection, render } from "astro:content";
+import * as path from "path";
 
-const dirs = dirpages["/markdown/dir"] ?? [];
+const dirs = (await getCollection("dir")).sort((a, b) => {
+    const x = a.filePath as string;
+    const y = b.filePath as string;
+
+    return x.localeCompare(y);
+}).map((dir) => {
+    return {
+        ...dir.data,
+        href: "/dir/" + path.parse(dir.filePath ?? "").name.replace(/\[.*?\]/, "").trim().replace(/\s+/, "_"),
+    };
+});
 ---
 
 <nav class="py-4 px-1">

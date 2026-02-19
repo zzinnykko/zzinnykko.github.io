@@ -1,11 +1,5 @@
 ---
-import dirpages from "../../parsed/dirpages.json";
-
-
-const { frontmatter } = Astro.props;
-const dir = "/markdown/page/" + frontmatter.slug
-// @ts-ignore
-const pages = dirpages[dir] ?? [];
+const { frontmatter, pages } = Astro.props;
 
 ---
 

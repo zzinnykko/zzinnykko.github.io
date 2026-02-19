@@ -3,6 +3,8 @@ export const partial = true;
 import * as path from "path";
 import { getCollection, render } from "astro:content";
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import Page from "../../layouts/Page.astro";
+type PageInfo = { title: string, updated: string, href: string, content: string }; 
 
 const allpage = await getCollection("page");
 const container = await AstroContainer.create();
@@ -13,16 +15,36 @@ export async function getStaticPaths() {
     for (const page of allpage) {
         const title = page.data.title ?? "#n/a: no title";
         const updated = page.data.updated ?? new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
-        const { Content } = await render(page);
-        const content = await container.renderToString(Content);
-
-        const { dir, name } = path.parse(page.filePath ?? "");
-        let href = "/page/" + name.replace(/\[.*?\]/, "").trim().replace(/\s+/, "_");
-        const tar = "./parsed" + href + ".json";
+        const { name } = path.parse(page.filePath ?? "");
+        const slug = name.replace(/\[.*?\]/, "").trim().replace(/\s+/, "_");
+        let href = "/page/" + slug;
         if (href === "/page/index") href = "/";
+        
+        const { Content } = await render(page);
+        const content = await container.renderToString(Page, {
+            props: { frontmatter: page.data },
+            slots: {
+                default: await container.renderToString(Content),
+            },
+        });
+
+        result.push({ params: { slug }, props: { title, updated, href, content } });
     }
 
-    // return [
-    //     { params: { slug: "xxx" }, props: { "xxx": "yyy" } },
-    // ];
+    return result;
+}
+
+export function GET({ props }: { props: PageInfo }): Response {
+    const { title, updated, href, content } = props;
+
+    return new Response(
+        JSON.stringify(
+            {
+                title, updated, href, content
+            }
+        ),
+        {
+            status: 200, headers: { "Content-type": "application/json" },
+        }
+    );
 }

@@ -1,10 +1,29 @@
 ---
 ---
 
-<main class="py-4 px-1">
+<main id="json-here" class="py-4 px-1">
 
 </main>
 
 <script>
-    
+    const $jsonHere = document.getElementById("json-here");
+
+    window.addEventListener("fetch-content", async (e) => {
+        const customEvent = e as CustomEvent;
+        const tar = customEvent.detail.tar ?? "";
+
+        console.log(tar);
+
+        let r;
+        try {
+            let res = await fetch(tar);
+            if (res.status !== 200) res = await fetch("/page/404.json");
+
+            r = await res.json();
+        } catch (err) {
+            r = { content: "#n/a failed to attach json file" };
+        }
+
+        if ($jsonHere) $jsonHere.innerHTML = r.content;
+    });
 </script>
