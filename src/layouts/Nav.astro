@@ -18,6 +18,7 @@ const dirs = (await getCollection("dir")).sort((a, b) => {
 <nav class="py-4 px-1">
     <ul class="flex flex-wrap justify-left items-center gap-x-4">
         <li>카테고리:</li>
+        <li><a href="/">Home</a></li>
         {
             dirs.map((dir) => (
                 <li><a href={ dir.href }>{ dir.title }</a></li>

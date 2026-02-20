@@ -33,37 +33,43 @@
     main {
         article.page {
             h2 {
-                @apply text-8 my-8 mb-4;
+                @apply text-8 my-12 mb-4;
                 &:before {
                     @apply content-["#_"];
                 }
             }
-            p, ul, pre, blockquote {
+            p, & > ul, pre, blockquote {
                 @apply my-4;
             }
             pre.astro-code, blockquote {
-                @apply p-4 !bg-gray-100;
+                @apply p-4 !bg-gray-100 border-l-4;
             }
-            ul > li {
+            /* ul > li {
                 @apply block ml-4;
                 &:before {
                     @apply content-["-"] inline-block w-4 ml--4;
                 }
+            } */
+            ul {
+                @apply list-disc ml-4;
             }
             img {
                 @apply block max-w-full mx-auto;
             }
-            p > code, ul > code {
-                @apply border-b border-1 border-dotted;
+            p > code, li > code {
+                @apply border-b border-b-dashed border-black;
             }
         }
 
         article.dir {
-            ul > li {
+            /* ul > li {
                 @apply block py-4 ml-4; 
                 &:before {
                     @apply content-["-"] w-4 inline-block ml--4;
                 }
+            } */
+            ul {
+                @apply list-disc ml-4;
             }
         }
     }

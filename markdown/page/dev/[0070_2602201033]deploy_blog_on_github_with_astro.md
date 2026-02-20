@@ -22,7 +22,7 @@ deno 로 했을 댄, md 파일 파싱, 블로그 외형 렌더링, atomic css �
 
 ## import.meta.glob 문제
 
-동적으로 glob 패턴 생성이 안됨, 예를들어 아래와 같이 변수를 사용하면 에러남
+vite 에서 제공하는 import.meta.glob 은 동적으로 glob 패턴 생성이 안됨, 예를들어 아래와 같이 변수를 사용하면 에러남
 
 ```javascript
 const allglobs = import.meta.glob(`${ root }/pages/**.*/md`);
@@ -34,11 +34,11 @@ const allglobs = import.meta.glob(`${ root }/pages/**.*/md`);
 
 나름 효율적인 작업을 한답시고, `/src/lib` 폴더를 만들어서 그 안에 모든 md 파일을 파싱하고, 중요한 정보만 (예를 들면, 페이지 타이틀이나 인터넷주소) 별도 파일로 만들어서 저장
 
-astro 컴포넌트들이 그 저장된 파일을 참고하여 페이지를 구성하고독 함
+astro 컴포넌트들이 그 저장된 파일을 참고하여 페이지를 구성하도록 함
 
 근데, 이 작업이 순차적으로 진행되게 하는 방법을 찾을 수 없었음, ai 에 물어보면 병렬로 작업한다고 하고 인위적인 렌더링 순서 조절은 어렵다고 함
 
-또한 `astro.config.mjs` 파일에서 훅을 활용하는 법도 해봤으나, 다 안됨 그래서 포기
+또한 `astro.config.mjs` 파일에서 훅을 활용하는 법도 해봤으나, 훅에서는 import.meta.glob 이 작동안함. 그래서 포기
 
 ## getCollection 사용
 
