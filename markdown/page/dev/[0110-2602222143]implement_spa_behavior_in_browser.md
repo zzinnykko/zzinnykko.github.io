@@ -24,8 +24,10 @@ fetch 트리거는 인터넷 주소임, 인터넷 주소가 변경될 때 실제
 
 위 세가지 케이스 모두 인터넷 주소가 변경됨, 변경된 주소를 읽어와서 주소에 매칭되는 콘텐츠를 로드하면 됨
 
-```javascript
-// javascript
+아래는 astro 컴포넌트 내에서 작성된 코드이며, 빌드하면 html 안에서 `<script type="module">` 태그 내에서 javascript 로 렌더링 됨
+
+```typescript
+// typescript
 
 // 주소에 따라 fetch 하는 함수
 // 여기서는 다른 컴포넌트가 실제 fetch 를 담당하기에, 주소에 따른 로드 대상을 계산해서 커스텀 이벤트로 전달 
